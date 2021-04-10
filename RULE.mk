@@ -40,9 +40,6 @@ OUT_DIR = result
 ######################################
 # source
 ######################################
-
-
-
 # C sources
 C_SOURCES +=  \
 $(USER_SRC_DIR)/stm32f1xx_it.c \
@@ -173,11 +170,9 @@ $(BUILD_DIR)/$(TARGET).elf: $(OBJECTS) Makefile
 $(BUILD_DIR)/%.hex: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(HEX) $< $@
 
-
-	
 $(BUILD_DIR)/%.bin: $(BUILD_DIR)/%.elf | $(BUILD_DIR)
 	$(BIN) $< $@	
-	
+
 $(BUILD_DIR):
 	mkdir $@		
 
@@ -187,8 +182,14 @@ $(OUT_DIR):
 #######################################
 # clean up
 #######################################
-clean:
+cleanall:
 	-rm -fR $(BUILD_DIR) $(OUT_DIR)
+
+clean:
+	-rm -rf $(OUT_DIR) \
+	$(addprefix $(BUILD_DIR)/,$(patsubst %.c, %.o, $(wildcard *.c))) \
+	$(BUILD_DIR)/$(TARGET).*
+
   
 #######################################
 # dependencies
