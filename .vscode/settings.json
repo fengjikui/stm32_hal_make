@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "bsp_led.h": "c",
+        "stm32f1xx_it.h": "c",
+        "main.h": "c"
+    }
+}

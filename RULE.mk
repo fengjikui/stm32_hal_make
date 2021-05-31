@@ -41,10 +41,10 @@ OUT_DIR = result
 # source
 ######################################
 # C sources
-C_SOURCES +=  \
-$(USER_SRC_DIR)/stm32f1xx_it.c \
-$(USER_SRC_DIR)/stm32f1xx_hal_msp.c \
-$(USER_SRC_DIR)/system_stm32f1xx.c
+# C_SOURCES +=  \
+# $(USER_SRC_DIR)/stm32f1xx_it.c \
+# $(USER_SRC_DIR)/stm32f1xx_hal_msp.c \
+# $(USER_SRC_DIR)/system_stm32f1xx.c
 
 
 C_SOURCES += $(HAL_SOURCES)
@@ -190,7 +190,20 @@ clean:
 	$(addprefix $(BUILD_DIR)/,$(patsubst %.c, %.o, $(wildcard *.c))) \
 	$(BUILD_DIR)/$(TARGET).*
 
-  
+
+baudrate=115200
+port=$(shell ls /dev/tty.usb*)
+
+flash:
+	$(ROOT_DIR)/stm32isp-unix/stm32isp $(BUILD_DIR)/$(TARGET).hex $(port) $(baudrate)
+
+login:
+	$(ROOT_DIR)/readserial.py $(port)
+
+
+help:
+	@echo $(port)
+
 #######################################
 # dependencies
 #######################################
